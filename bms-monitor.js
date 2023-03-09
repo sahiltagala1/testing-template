@@ -41,13 +41,13 @@ function classifyParameters(
   upperLimit,
   tolerance
 ) {
-  const res_range = checkRange(paramVal, lowerLimit, upperLimit);
-  const res_warning = checkWarning(paramVal, lowerLimit, upperLimit, tolerance);
-  if (!res_range.inRange) {
-    console.log(`${paramName} ${lang.breachType(res_range.breachType)}`);
-    return res_range.inRange;
-  } else if (res_warning.isWarning) {
-    console.log(`${paramName} ${lang.warningType(res_warning.warningType)}`);
+  const resRange = checkRange(paramVal, lowerLimit, upperLimit);
+  const resWarning = checkWarning(paramVal, lowerLimit, upperLimit, tolerance);
+  if (!resRange.inRange) {
+    console.log(`${paramName} ${lang.breachType(resRange.breachType)}`);
+    return resRange.inRange;
+  } else if (resWarning.isWarning) {
+    console.log(`${paramName} ${lang.warningType(resWarning.warningType)}`);
     return true;
   } else {
     console.log(`${paramName} ${lang.normal}`);
