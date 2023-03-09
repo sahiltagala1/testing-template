@@ -1,14 +1,14 @@
-const lang = require("./language");
-const convertToCelsius = require("./unitConversion");
+const lang = require('./language');
+const convertToCelsius = require('./unitConversion');
 const tolerance = 0.05;
 
 function checkRange(val, min, max) {
   if (val < min) {
-    return { inRange: false, breachType: lang.low };
+    return {inRange: false, breachType: lang.low};
   } else if (val > max) {
-    return { inRange: false, breachType: lang.high };
+    return {inRange: false, breachType: lang.high};
   } else {
-    return { inRange: true };
+    return {inRange: true};
   }
 }
 
@@ -29,17 +29,17 @@ function checkWarning(val, min, max, tolerance) {
     },
   ];
 
-  const matchedClassification = rangeClassifications.find(({ range }) => range);
+  const matchedClassification = rangeClassifications.find(({range}) => range);
 
-  return matchedClassification ? matchedClassification : { isWarning: false };
+  return matchedClassification ? matchedClassification : {isWarning: false};
 }
 
 function classifyParameters(
-  paramName,
-  paramVal,
-  lowerLimit,
-  upperLimit,
-  tolerance
+    paramName,
+    paramVal,
+    lowerLimit,
+    upperLimit,
+    tolerance,
 ) {
   const resRange = checkRange(paramVal, lowerLimit, upperLimit);
   const resWarning = checkWarning(paramVal, lowerLimit, upperLimit, tolerance);
@@ -60,27 +60,26 @@ function check(parameters) {
 }
 
 function batteryIsOk(temperature, tempUnit, soc, chargeRate) {
-
   temperature = convertToCelsius(temperature, tempUnit);
 
-  let temperatureValue = classifyParameters(
-    lang.temperature,
-    temperature,
-    0,
-    45,
-    tolerance
+  const temperatureValue = classifyParameters(
+      lang.temperature,
+      temperature,
+      0,
+      45,
+      tolerance,
   );
-  let socValue = classifyParameters(lang.soc, soc, 20, 80, tolerance);
-  let chargeRateValue = classifyParameters(
-    lang.chargeRate,
-    chargeRate,
-    0,
-    0.8,
-    tolerance
+  const socValue = classifyParameters(lang.soc, soc, 20, 80, tolerance);
+  const chargeRateValue = classifyParameters(
+      lang.chargeRate,
+      chargeRate,
+      0,
+      0.8,
+      tolerance,
   );
   const parameters = [temperatureValue, socValue, chargeRateValue];
-  let isBatteryOk = parameters.every(check);
+  const isBatteryOk = parameters.every(check);
   return isBatteryOk;
 }
 
-module.exports = { batteryIsOk };
+module.exports = {batteryIsOk};
