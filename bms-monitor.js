@@ -1,6 +1,7 @@
-const lang = require('./language');
+const messages = require('./language');
 const convertToCelsius = require('./unitConversion');
 const tolerance = 0.05;
+const lang = messages.en;
 
 function checkRange(val, min, max) {
   if (val < min) {

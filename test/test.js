@@ -1,6 +1,7 @@
 const {expect} = require('chai');
 const {it} = require('mocha');
 const {batteryIsOk} = require('../bms-monitor');
+const messages = require('../language');
 
 describe('Test cases to check Battery', function() {
   it('Temperature breach high', function() {
@@ -58,5 +59,29 @@ describe('Test cases to check Battery', function() {
   it('Random false parameters', function() {
     const result = batteryIsOk(122, 'Fahrenehit', 80, 0);
     expect(result).equal(false);
+  });
+  it('Language check', function() {
+    const geB = messages.ge.breachType('low');
+    expect(geB).equal('Verletzungstyp: low');
+    const geW = messages.ge.warningType('low');
+    expect(geW).equal('Warnungstyp: low');
+  });
+  it('Language check', function() {
+    const hi = messages.hi.breachType('low');
+    expect(hi).equal('ब्रीच-टाइप: low');
+    const hiW = messages.hi.warningType('low');
+    expect(hiW).equal('चेतावनी-प्रकार: low');
+  });
+  it('Language check', function() {
+    const fr = messages.fr.breachType('low');
+    expect(fr).equal('Type de violation: low');
+    const frW = messages.fr.warningType('low');
+    expect(frW).equal('Type d\'avertissement: low');
+  });
+  it('Language check', function() {
+    const kn = messages.kn.breachType('low');
+    expect(kn).equal('ಉಲ್ಲಂಘನೆ-ಪ್ರಕಾರ: low');
+    const knW = messages.kn.warningType('low');
+    expect(knW).equal('ಎಚ್ಚರಿಕೆ-ಪ್ರಕಾರ: low');
   });
 });
