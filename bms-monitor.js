@@ -1,5 +1,5 @@
 const messages = require('./language');
-const classifyParameters = require('./classify-parameters');
+const {classifyParameters} = require('./classify-parameters');
 const convertToCelsius = require('./unitConversion');
 const tolerance = 0.05;
 const lang = messages.en;

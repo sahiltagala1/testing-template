@@ -43,15 +43,17 @@ function classifyParameters(
   const resRange = checkRange(paramVal, lowerLimit, upperLimit);
   const resWarning = checkWarning(paramVal, lowerLimit, upperLimit, tolerance);
   if (!resRange.inRange) {
-    console.log(`${paramName} ${lang.breachType(resRange.breachType)}`);
+    // console.log(`${paramName} ${lang.breachType(resRange.breachType)}`);
     return resRange.inRange;
+    // return `${paramName} ${lang.breachType(resRange.breachType)}`, resRange.inRange;
   } else if (resWarning.isWarning) {
-    console.log(`${paramName} ${lang.warningType(resWarning.warningType)}`);
+    // console.log(`${paramName} ${lang.warningType(resWarning.warningType)}`);
     return true;
+    // return `${paramName} ${lang.warningType(resWarning.warningType)}`, true;
   } else {
-    console.log(`${paramName} ${lang.normal}`);
+    // console.log(`${paramName} ${lang.normal}`);
     return true;
   }
 }
 
-module.exports = classifyParameters;
+module.exports = {checkRange, checkWarning, classifyParameters};

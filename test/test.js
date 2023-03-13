@@ -1,6 +1,8 @@
 const {expect} = require('chai');
 const {it} = require('mocha');
 const {batteryIsOk} = require('../bms-monitor');
+const {checkRange} = require('../classify-parameters');
+const {checkWarning} = require('../classify-parameters');
 const messages = require('../language');
 
 describe('Test cases to check Battery', function() {
@@ -60,7 +62,36 @@ describe('Test cases to check Battery', function() {
     const result = batteryIsOk(122, 'Fahrenehit', 80, 0);
     expect(result).equal(false);
   });
-  it('Language check', function() {
+  it('check range 1', function() {
+    const res = checkRange(20, 20, 80);
+    const a = res.inRange;
+    expect(a).equal(true);
+    const res1 = checkRange(80, 20, 80);
+    const a1 = res1.inRange;
+    expect(a1).equal(true);
+  });
+  it('check range 2', function() {
+    const res = checkRange(90, 20, 80);
+    const a = res.inRange;
+    expect(a).equal(false);
+    const res1 = checkRange(10, 20, 80);
+    const a1 = res1.inRange;
+    expect(a1).equal(false);
+  });
+  it('check warning 1', function() {
+    const res = checkWarning(24, 20, 80, 0.05 );
+    const a = res.isWarning;
+    expect(a).equal(true);
+    const res1 = checkWarning(76, 20, 80, 0.05);
+    const a1 = res1.isWarning;
+    expect(a1).equal(true);
+  });
+  it('check warning 2', function() {
+    const res = checkWarning(30, 20, 80, 0.05);
+    const a = res.isWarning;
+    expect(a).equal(false);
+  });
+  it('Language check en', function() {
     const res = messages.en;
     expect(res.breachType('low')).equal('Breach-Type: low');
     expect(res.warningType('high')).equal('Warning-Type: high');
@@ -71,7 +102,7 @@ describe('Test cases to check Battery', function() {
     expect(res.soc).equal('State of Charge');
     expect(res.chargeRate).equal('Charge rate');
   });
-  it('Language check', function() {
+  it('Language check ge', function() {
     const res = messages.ge;
     expect(res.breachType('low')).equal('Verletzungstyp: low');
     expect(res.warningType('high')).equal('Warnungstyp: high');
@@ -82,7 +113,7 @@ describe('Test cases to check Battery', function() {
     expect(res.soc).equal('Ladezustand');
     expect(res.chargeRate).equal('Ladegeschwindigkeit');
   });
-  it('Language check', function() {
+  it('Language check hi', function() {
     const res = messages.hi;
     expect(res.breachType('low')).equal('ब्रीच-टाइप: low');
     expect(res.warningType('high')).equal('चेतावनी-प्रकार: high');
@@ -93,7 +124,7 @@ describe('Test cases to check Battery', function() {
     expect(res.soc).equal('चार्ज स्थिति');
     expect(res.chargeRate).equal('चार्ज दर');
   });
-  it('Language check', function() {
+  it('Language check fr', function() {
     const res = messages.fr;
     expect(res.breachType('low')).equal('Type de violation: low');
     expect(res.warningType('high')).equal('Type d\'avertissement: high');
@@ -104,7 +135,7 @@ describe('Test cases to check Battery', function() {
     expect(res.soc).equal('État de charge');
     expect(res.chargeRate).equal('Taux de charge');
   });
-  it('Language check', function() {
+  it('Language check kn', function() {
     const res = messages.kn;
     expect(res.breachType('low')).equal('ಉಲ್ಲಂಘನೆ-ಪ್ರಕಾರ: low');
     expect(res.warningType('high')).equal('ಎಚ್ಚರಿಕೆ-ಪ್ರಕಾರ: high');
