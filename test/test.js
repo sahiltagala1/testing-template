@@ -3,6 +3,7 @@ const {it} = require('mocha');
 const {batteryIsOk} = require('../bms-monitor');
 const {checkRange} = require('../classify-parameters');
 const {checkWarning} = require('../classify-parameters');
+const {classifyParameters} = require('../classify-parameters');
 const messages = require('../language');
 
 describe('Test cases to check Battery', function() {
@@ -90,6 +91,14 @@ describe('Test cases to check Battery', function() {
     const res = checkWarning(30, 20, 80, 0.05);
     const a = res.isWarning;
     expect(a).equal(false);
+  });
+  it('check classifyParameters 1', function() {
+    const res = classifyParameters('temp', 30, 20, 80, 0.05);
+    expect(res).equal(true);
+  });
+  it('check classifyParameters 2', function() {
+    const res = classifyParameters('temp', 10, 20, 80, 0.05);
+    expect(res).equal(false);
   });
   it('Language check en', function() {
     const res = messages.en;

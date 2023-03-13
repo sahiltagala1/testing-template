@@ -44,14 +44,16 @@ function classifyParameters(
   const resWarning = checkWarning(paramVal, lowerLimit, upperLimit, tolerance);
   if (!resRange.inRange) {
     // console.log(`${paramName} ${lang.breachType(resRange.breachType)}`);
-    return resRange.inRange;
-    // return `${paramName} ${lang.breachType(resRange.breachType)}`, resRange.inRange;
+    // return resRange.inRange;
+    // const str = `${paramName} ${lang.breachType(resRange.breachType)}`;
+    return false;
   } else if (resWarning.isWarning) {
     // console.log(`${paramName} ${lang.warningType(resWarning.warningType)}`);
-    return true;
     // return `${paramName} ${lang.warningType(resWarning.warningType)}`, true;
+    return true;
   } else {
     // console.log(`${paramName} ${lang.normal}`);
+    // return paramName+' '+lang.normal, true;
     return true;
   }
 }
